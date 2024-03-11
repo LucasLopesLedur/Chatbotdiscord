@@ -7,10 +7,10 @@ intents = discord.Intents.default()
 intents.messages = True
 client = discord.Client(intents=intents)
 
-TOKEN = 'MTE5NDc1MDI2Njg4NTU1NDMyNw.G5aGaJ.kF_aMXxuPG42MAuDyVCNSeFrQsaK6I-rtYpHNw'
-OPENAI_API_KEY = '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'
+TOKEN = 'BOTTOKEN'
+OPENAI_API_KEY = 'KEYCHATGPT'
 
-PASTEBIN_URL = 'https://pastebin.com/raw/yVKL98EP'
+PASTEBIN_URL = 'PASTEBIN_URL'
 
 openai.api_key = OPENAI_API_KEY
 
