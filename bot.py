@@ -6,14 +6,14 @@ intents = discord.Intents.default()
 intents.messages = True
 client = discord.Client(intents=intents)
 
-TOKEN = 'TOKEN-BOT'
-OPENAI_API_KEY = 'KEY-OPENAI'
+TOKEN = 'BOT-TOKEN'
+OPENAI_API_KEY = 'OPENAI-KEY'
 
 openai.api_key = OPENAI_API_KEY
 
 @client.event
 async def on_ready():
-    print(f'Conectado como {client.user.name}!')
+    print(f'Logged in as {client.user.name}!')
 
 @client.event
 async def on_message(message):
@@ -21,19 +21,19 @@ async def on_message(message):
         return
 
     if message.content.startswith('.gchatp'):
-        await message.channel.send(f'{message.author.mention} Olá, em que posso te ajudar?')
+        await message.channel.send(f'{message.author.mention} Hello, how can I assist you?')
 
         try:
             user_question = await client.wait_for('message', timeout=120, check=lambda m: m.author == message.author and m.channel == message.channel)
         except asyncio.TimeoutError:
-            await message.channel.send(f'{message.author.mention} Tempo expirado. Se precisar de ajuda, use o comando novamente.')
+            await message.channel.send(f'{message.author.mention} Time expired. If you need help, use the command again.')
             return
 
         try:
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": "Você é um assistente, muito feliz, que gosta muito de ajudar a todos."},
+                    {"role": "system", "content": "You are an assistant, very happy, who loves to help everyone."},
                     {"role": "user", "content": f"{user_question.content}"}
                 ]
             )
@@ -44,13 +44,13 @@ async def on_message(message):
                 try:
                     user_message = await client.wait_for('message', timeout=120, check=lambda m: m.author == message.author and m.channel == message.channel)
                 except asyncio.TimeoutError:
-                    await message.channel.send(f'{message.author.mention} Tempo expirado. Se precisar de ajuda, use o comando novamente.')
+                    await message.channel.send(f'{message.author.mention} Time expired. If you need help, use the command again.')
                     break
 
                 response = openai.ChatCompletion.create(
                     model="gpt-3.5-turbo",
                     messages=[
-                        {"role": "system", "content": "Você é um assistente, muito feliz, que gosta muito de ajudar a todos."},
+                        {"role": "system", "content": "You are an assistant, very happy, who loves to help everyone."},
                         {"role": "user", "content": f"{user_message.content}"}
                     ]
                 )
@@ -58,8 +58,8 @@ async def on_message(message):
                 await message.channel.send(f'{message.author.mention} {bot_answer}')
 
         except Exception as e:
-            print(f'Ocorreu um erro ao processar a pergunta: {e}')
+            print(f'An error occurred while processing the question: {e}')
             print(openai.__version__)
-            await message.channel.send(f'Ocorreu um erro ao processar a pergunta. Por favor, tente novamente.')
+            await message.channel.send(f'An error occurred while processing the question. Please try again.')
 
 client.run(TOKEN)
