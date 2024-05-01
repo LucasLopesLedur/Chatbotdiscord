@@ -6,10 +6,10 @@ intents = discord.Intents.default()
 intents.messages = True
 client = discord.Client(intents=intents)
 
-TOKEN = 'BOT_TOKEN'
-OPENAI_API_KEY = 'KEY_CHATGPT'
+TOKEN = 'TOKEN-BOT'
+OPENAI_API_KEY = 'KEY-OPENAI'
 
-openai.api_key = 'OPENAI_KEY'
+openai.api_key = OPENAI_API_KEY
 
 @client.event
 async def on_ready():
